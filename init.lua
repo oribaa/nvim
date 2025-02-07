@@ -30,8 +30,8 @@ vim.keymap.set("v", "<leader>x", ":.lua<CR>")
 vim.keymap.set("n", "sv", ":vsplit<CR><C-W><C-L>")
 vim.keymap.set("n", "sh", ":split<CR><C-W><C-J>")
 
-vim.keymap.set("n", "<leader>ee", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix" })
-vim.keymap.set("n", "<leader>EE", "<cmd>Telescope diagnostics bufnr=0<CR>")
+vim.keymap.set("n", "<leader>EE", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix" })
+vim.keymap.set("n", "<leader>ee", "<cmd>Telescope diagnostics bufnr=0<CR>")
 
 vim.keymap.set("n", "<leader><leader>n", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>cprev<CR>zz")
