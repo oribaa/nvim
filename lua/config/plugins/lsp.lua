@@ -1,5 +1,8 @@
 return {
 	{
+		"ziglang/zig.vim",
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			'saghen/blink.cmp',
@@ -18,7 +21,16 @@ return {
 		config = function()
 			local caps = require('blink.cmp').get_lsp_capabilities()
 			require("lspconfig").ols.setup { capabilities = caps }
-			require("lspconfig").zls.setup { capabilities = caps }
+			require("lspconfig").zls.setup {
+				capabilities = caps,
+				settings = {
+					zls = {
+						semantic_token = "partial",
+						enable_build_on_save = true
+					}
+				}
+			}
+			require("lspconfig").rust_analyzer.setup { capabilities = caps }
 
 			require("lspconfig").lua_ls.setup { capabilities = caps }
 			require("lspconfig").clangd.setup { capabilities = caps, cmd = { "clangd", "--fallback-style=webkit" } }
