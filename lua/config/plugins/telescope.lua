@@ -50,6 +50,12 @@ return {
 					cwd = vim.fn.stdpath("config")
 				}
 			end)
+
+			vim.keymap.set("n", "<leader>fz", function()
+				require('telescope.builtin').live_grep {
+					cwd = "/users/oliverjorgensen/Tools/zig/lib/"
+				}
+			end)
 		end
 	}
 }

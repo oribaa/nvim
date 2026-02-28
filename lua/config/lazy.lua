@@ -29,23 +29,23 @@ require("lazy").setup({
 		},
 		{
 			"zenbones-theme/zenbones.nvim",
-			-- Optionally install Lush. Allows for more configuration or extending the colorscheme
-			-- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-			-- In Vim, compat mode is turned on as Lush only works in Neovim.
 			dependencies = "rktjmp/lush.nvim",
 			lazy = false,
 			priority = 1000,
+		},
+		{
+			"arzg/vim-colors-xcode",
+			lazy = false,
+			priority = 1000,
 			-- you can set set configuration options here
-			-- config = function()
-			--     vim.g.zenbones_darken_comments = 45
-			--     vim.cmd.colorscheme('zenbones')
-			-- end
+			config = function()
+			end
 		},
 		{ import = "config.plugins" },
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "zenbones" } },
+	-- install = { colorscheme = { "xcodelighthc" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true, notify = false },
 })

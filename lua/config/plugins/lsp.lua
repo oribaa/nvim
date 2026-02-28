@@ -3,37 +3,36 @@ return {
 		"ziglang/zig.vim",
 	},
 	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			'saghen/blink.cmp',
-			{
-				"folke/lazydev.nvim",
-				ft = "lua", -- only load on lua files
-				opts = {
-					library = {
-						-- See the configuration section for more details
-						-- Load luvit types when the `vim.uv` word is found
-						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-					},
-				},
+		'saghen/blink.cmp',
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 			},
-		},
+		}
+	},
+	{
+		"neovim/nvim-lspconfig",
 		config = function()
-			local caps = require('blink.cmp').get_lsp_capabilities()
-			require("lspconfig").ols.setup { capabilities = caps }
-			require("lspconfig").zls.setup {
-				capabilities = caps,
-				settings = {
-					zls = {
-						semantic_token = "partial",
-						enable_build_on_save = true
-					}
-				}
-			}
-			require("lspconfig").rust_analyzer.setup { capabilities = caps }
+			vim.lsp.config('clangd', {
+				cmd = { "clangd", "--fallback-style=webkit" },
+				filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }
+			})
+			vim.lsp.enable('clangd')
+			vim.lsp.enable('zls')
+			vim.lsp.enable('lua_ls');
 
-			require("lspconfig").lua_ls.setup { capabilities = caps }
-			require("lspconfig").clangd.setup { capabilities = caps, cmd = { "clangd", "--fallback-style=webkit" } }
+			vim.lsp.config('jails', {
+				cmd = { "jails" },
+				filetypes = { "jai" },
+				root_file_markers = { "build.jai", "main.jai" }
+			})
+			vim.lsp.enable('jails')
 
 			vim.api.nvim_create_autocmd('LspAttach', {
 				callback = function(args)
@@ -56,11 +55,53 @@ return {
 							callback = function()
 								vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
 							end,
-
 						})
 					end
-				end,
+				end
 			})
-		end,
+		end
 	}
+	--return {
+	--	{
+	--		"neovim/nvim-lspconfig",
+	--		dependencies = {
+	--			'saghen/blink.cmp',
+	--			{
+	--			},
+	--		},
+	--		config = function()
+	--			vim.lsp.config('ols', { capabilities = caps })
+	--			vim.lsp.enable('ols')
+	--			vim.lsp.config('zls', {
+	--				settings = {
+	--					zls = {
+	--						semantic_token = "partial",
+	--						enable_build_on_save = true
+	--					}
+	--				}
+	--			})
+	--			vim.lsp.enable('zls')
+	--
+	--			vim.lsp.enable('lua_ls');
+	--
+	--			vim.lsp.config('clangd', {  })
+	--			vim.lsp.enable('clangd');
+	--
+	--			local configs = require("lspconfig.configs")
+	--			if not configs.jails then
+	--				configs.jails = {
+	--					default_config = {
+	--						cmd = { "/Users/oliverjorgensen/Tools/Jails/bin/jails" },
+	--						-- root_dir = vim.lsp.config.util.root_pattern("jails.json", "build.jai", "main.jai"),
+	--						filetypes = { "jai" },
+	--						name = "Jails",
+	--					},
+	--				}
+	--			end
+	--			vim.lsp.enable('jails')
+	--			vim.filetype.add({ extension = { jai = "jai", } })
+	--
+	--		end,
+	--	}
+	--}
 }
